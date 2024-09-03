@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quarterly Average Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Permanent Marker", system-ui;
+            font-weight: 300;
+            font-style: light;
+            background-color: #fff;
+            text-align: center;
+            align-items: center;
+            padding: 20px;
+        }
+        input {
+            margin: 10px;
+            padding: 10px;
+            width: 50px;
+            border-radius: 1px;
+            border: none;
+            background-color: #f4f4f4;
+            transition: linear 1s;
+        }
+        input:active {
+            border-radius: 1px green;
+            transition: linear 1s;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #333;
+        }
+        @media (min-width: 344px ) {
+            input {
+                width: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Quarterly Average Calculator</h1>
+    <form id="gradeForm">
+        <h2>Enter Grades</h2>
+        <div>
+            <label>Math:</label>
+            <input type="number" id="mathTest" placeholder="Test" min="0" max="20">
+            <input type="number" id="mathAssignments" placeholder="Assignments" min="0" max="20">
+            <input type="number" id="mathExam" placeholder="Exam" min="0" max="40">
+        </div>
+        <div>
+            <label>Arabic:</label>
+            <input type="number" id="arabicTest" placeholder="Test" min="0" max="20">
+            <input type="number" id="arabicAssignments" placeholder="Assignments" min="0" max="20">
+            <input type="number" id="arabicExam" placeholder="Exam" min="0" max="40">
+        </div>
+        <div>
+            <label>French:</label>
+            <input type="number" id="frenchTest" placeholder="Test" min="0" max="20">
+            <input type="number" id="frenchAssignments" placeholder="Assignments" min="0" max="20">
+            <input type="number" id="frenchExam" placeholder="Exam" min="0" max="40">
+        </div>
+        <div>
+            <label>English:</label>
+            <input type="number" id="englishTest" placeholder="Test" min="0" max="20">
+            <input type="number" id="englishAssignments" placeholder="Assignments" min="0" max="20">
+            <input type="number" id="englishExam" placeholder="Exam" min="0" max="40">
+        </div>
+        <div>
+            <label>Islamic:</label>
+            <input type="number" id="islamicTest" placeholder="Test" min="0" max="20">
+            <input type="number" id="islamicAssignments" placeholder="Assignments" min="0" max="20">
+            <input type="number" id="islamicExam" placeholder="Exam" min="0" max="40">
+        </div>
+        <div>
+            <label>Civics:</label>
+            <input type="number" id="civicsTest" placeholder="Test" min="0" max="20">
+            <input type="number" id="civicsAssignments" placeholder="Assignments" min="0" max="20">
+            <input type="number" id="civicsExam" placeholder="Exam" min="0" max="40">
+        </div>
+        <div>
+            <label>His/Geo:</label>
+            <input type="number" id="historyTest" placeholder="Test" min="0" max="20">
+            <input type="number" id="historyAssignments" placeholder="Assignments" min="0" max="20">
+            <input type="number" id="historyExam" placeholder="Exam" min="0" max="40">
+        </div>
+        <div>
+            <label>Science:</label>
+            <input type="number" id="scienceTest" placeholder="Test" min="0" max="20">
+            <input type="number" id="scienceAssignments" placeholder="Assignments" min="0" max="20">
+            <input type="number" id="scienceExam" placeholder="Exam" min="0" max="40">
+        </div>
+        <div>
+            <label>Physics:</label>
+            <input type="number" id="physicsTest" placeholder="Test" min="0" max="20">
+            <input type="number" id="physicsAssignments" placeholder="Assignments" min="0" max="20">
+            <input type="number" id="physicsExam" placeholder="Exam" min="0" max="40">
+        </div>
+        <button type="button" onclick="calculateAverage()">Calculate Average</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        function calculateAverage() {
+            const subjects = [
+                { name: 'Math', coefficient: 4 },
+                { name: 'Arabic', coefficient: 5 },
+                { name: 'French', coefficient: 3 },
+                { name: 'English', coefficient: 2 },
+                { name: 'Islamic', coefficient: 2 },
+                { name: 'Civics', coefficient: 1 },
+                { name: 'History', coefficient: 3 },
+                { name: 'Science', coefficient: 2 },
+                { name: 'Physics', coefficient: 2 }
+            ];
+
+            let totalWeightedScore = 0;
+            let totalCoefficient = 0;
+
+            subjects.forEach(subject => {
+                const test = parseFloat(document.getElementById(subject.name.toLowerCase() + 'Test').value) || 0;
+                const assignments = parseFloat(document.getElementById(subject.name.toLowerCase() + 'Assignments').value) || 0;
+                const exam = parseFloat(document.getElementById(subject.name.toLowerCase() + 'Exam').value) || 0;
+
+                const averageNote = ((test + assignments) / 2 + exam) / 3;
+                const weightedScore = averageNote * subject.coefficient;
+
+                totalWeightedScore += weightedScore;
+                totalCoefficient += subject.coefficient;
+            });
+
+            const globalAverage = totalWeightedScore / totalCoefficient;
+
+            let message = '';
+            if (globalAverage < 10.01) {
+                message = 'idiot';
+            } else if (globalAverage > 17) {
+                message = 'Ali Yacine';
+            } else {
+                message = 'average';
+            }
+
+            document.getElementById('result').innerText = `Quarterly Average: ${globalAverage.toFixed(2)} - ${message}`;
+        }
+    </script>
+</body>
+</html>
